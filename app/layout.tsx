@@ -4,6 +4,7 @@ import { Inter } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
+
 import { Analytics } from "@vercel/analytics/react";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -12,6 +13,10 @@ export const metadata = {
   title: "Baptist Student Fellowship - Kaduna Baptist Conference",
   description:
     "Official website of the Baptist Student Fellowship, Kaduna Baptist Conference",
+  icons: {
+    icon: "/bsf-logo.png",
+    apple: "/bsf-logo.png",
+  },
 };
 
 export default function RootLayout({
