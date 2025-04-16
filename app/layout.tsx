@@ -6,8 +6,6 @@ import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { Analytics } from "@vercel/analytics/react";
 
-import { Analytics } from "@vercel/analytics/react";
-
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
