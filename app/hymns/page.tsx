@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Search, Music, BookOpen } from "lucide-react";
+import { Search, Music, BookOpen, Star } from "lucide-react";
 
 interface HymnProps {
   title: string;
@@ -42,6 +42,11 @@ function HymnCard({ title, number, firstLine }: HymnProps) {
 
 export default function HymnsPage() {
   const hymns = [
+    {
+      title: "Students, Rise Now (BSF Hymn)",
+      number: "BSF",
+      firstLine: "Students, rise now, build the Kingdom",
+    },
     {
       title: "Amazing Grace",
       number: "1",
@@ -99,6 +104,43 @@ export default function HymnsPage() {
 
       <section className="w-full py-12 md:py-16 lg:py-20 bg-white">
         <div className="container px-4 md:px-6">
+          <div className="mb-12">
+            <Card className="bg-primary/5 border-primary">
+              <CardHeader className="flex flex-row items-center gap-4">
+                <Star className="h-8 w-8 text-primary" />
+                <div>
+                  <CardTitle className="text-secondary">
+                    BSF Official Hymn
+                  </CardTitle>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <h3 className="font-bold mb-2">Students, Rise Now</h3>
+                <p className="text-muted-foreground mb-4 italic">
+                  "Students, rise now, build the Kingdom,
+                  <br />
+                  Heed the Master's call today
+                  <br />
+                  Students, stand up, follow Jesus;
+                  <br />
+                  He's the Life and the Truth, the Way."
+                </p>
+                <p className="text-sm text-muted-foreground">
+                  The BSF Hymn was composed with the tune in 1993 by the Rev.
+                  (Dr.) Paul Odgen Davidson, Head of the Department of Music at
+                  The Nigerian Baptist Theological Seminary, Ogbomoso. This hymn
+                  embodies our mission to rise and build God's Kingdom as
+                  students of faith.
+                </p>
+              </CardContent>
+              <CardFooter>
+                <Button className="w-full bg-primary text-white hover:bg-primary/90">
+                  View Full Lyrics
+                </Button>
+              </CardFooter>
+            </Card>
+          </div>
+
           <div className="max-w-xl mx-auto mb-10">
             <div className="relative">
               <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />

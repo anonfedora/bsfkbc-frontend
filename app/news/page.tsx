@@ -11,27 +11,27 @@ export default function NewsPage() {
       title: "BAPTIST STUDENT'S FELLOWSHIP ANNUAL RETREAT",
       date: "17th-20th April, 2025",
       excerpt:
-        "Registration for the annual BSF conference is now open. Early bird registration ends July 15th.",
+        "Annual Easter Retreat, BSFKBC",
       imageUrl: "/placeholder.svg?height=200&width=400",
       content:
         "The Baptist Student Fellowship Annual Retreat is a time of spiritual renewal, fellowship, and growth. Join us for four days of inspiring messages, worship, workshops, and recreational activities. This year's theme is 'Rooted and Built Up in Christ' based on Colossians 2:7. Early bird registration is now open until July 15th. Don't miss this opportunity to deepen your faith and connect with fellow Baptist students from across the region.",
     },
     {
       id: "2",
-      title: "New Executive Committee Elected",
+      title: "Missions 2025 Elected",
       date: "May 28, 2023",
       excerpt:
-        "Congratulations to the newly elected executive committee members who will serve for the next academic year.",
+        "2025 Missions and Evangelism, BSFKBC, Pambegua",
       imageUrl: "/placeholder.svg?height=200&width=400",
       content:
         "We are pleased to announce the results of our recent elections for the BSF Executive Committee. After a transparent and democratic process, the following students have been elected to serve for the 2023-2024 academic year: John Adewale (President), Sarah Okafor (Vice President), Emmanuel Bello (General Secretary), Grace Musa (Financial Secretary), David Eze (Prayer Secretary), and Ruth Adamu (Welfare Secretary). The new committee will be inaugurated during our next general meeting. Please join us in congratulating them and praying for God's wisdom as they lead our fellowship.",
     },
     {
       id: "3",
-      title: "BSF Choir Wins Regional Competition",
-      date: "April 10, 2023",
+      title: "Conference In Session 2025",
+      date: "Feb, 2025",
       excerpt:
-        "Our choir has won first place in the regional gospel choir competition. Congratulations to all members!",
+        "Baptist Studen'ts Fellowship Annual Conference in Session, Kaduna Baptist Conference",
       imageUrl: "/placeholder.svg?height=200&width=400",
       content:
         "We are proud to announce that the Baptist Student Fellowship Choir has won first place in the Regional Gospel Choir Competition held last weekend. Competing against 15 other choirs from various institutions, our choir impressed the judges with their harmonious rendition of 'Total Praise' and 'How Great Thou Art'. Special thanks to the choir director, Michael Johnson, for his dedication and leadership. The choir will now represent our region in the national competition scheduled for August. Let's continue to support them with our prayers and encouragement.",
