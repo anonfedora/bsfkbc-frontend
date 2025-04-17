@@ -274,12 +274,6 @@ export default function GalleryPage() {
     },
     {
       imageUrl:
-        "https://scontent.fabv3-2.fna.fbcdn.net/v/t39.30808-6/489452372_676409561743894_2557768057837416198_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=833d8c&_nc_eui2=AeHrMk5M9BToINz2m9joQzB7FPpj0TZzJvcU-mPRNnMm9-hilqlZADX-ZhWQIcOh6KKF9J5FPf5bq_Z8tUmQigmF&_nc_ohc=D4guNpfuZtgQ7kNvwHjwe73&_nc_oc=AdnuAMCOACAQkMSjIXjV16-c2ZV-rNMYjaxvK4EZgdZCm3Rqt85LQ8nWWs72fzkZZto&_nc_zt=23&_nc_ht=scontent.fabv3-2.fna&_nc_gid=pmBWxVkwHREhAV488vAHYg&oh=00_AfGnW4EF3W56TLNOsUz2XuDJAPVfqFwzUW5vJgzESErU1Q&oe=6805702E",
-      title: "Missions 2025",
-      date: "March, 2025",
-    },
-    {
-      imageUrl:
         "https://scontent.fabv3-1.fna.fbcdn.net/v/t39.30808-6/489559719_676404575077726_9146163921259807220_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=833d8c&_nc_eui2=AeHu5kORB0BRegjOmEWy4RtQmJDw613JadCYkPDrXclp0GIuVvRO_VRAlXtu5PSgtQzdBNA4ZYMd0LRLb0YZpjFo&_nc_ohc=-irvjxAQw4cQ7kNvwFyymQ8&_nc_oc=AdnLz3g3ZCqvRsC4Y0Bjb0OfImbjE2-t-vE21Q0GPMVqf1dICHIS-IVXVmcUEb_LosY&_nc_zt=23&_nc_ht=scontent.fabv3-1.fna&_nc_gid=JEA2xLHXIKdYZX0dJ9V_WQ&oh=00_AfGutq3-vnDR85neLJgwzpuhF3mlZE2mtcEajYFFdT-G3A&oe=6805582A",
       title: "Missions 2025",
       date: "March, 2025",
@@ -323,12 +317,6 @@ export default function GalleryPage() {
     {
       imageUrl:
         "https://scontent.fabv3-1.fna.fbcdn.net/v/t39.30808-6/490358176_676422908409226_3697860773497962968_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=833d8c&_nc_eui2=AeHFO3q14ypoIY4IajLCEqoypokSdYfClmmmiRJ1h8KWaaio12d23xvSDn8j3vP1Y13cDfyzudMc3Gt5dlhS0HEO&_nc_ohc=_ZgFsTvA0xwQ7kNvwF-kA5N&_nc_oc=AdlTPs67iKaO5uShSEljMQArt8XE5sf0hEAMlZ9T5Jf5QUut2NJRsKQjjF9PR2S_eB8&_nc_zt=23&_nc_ht=scontent.fabv3-1.fna&_nc_gid=Pbzyc0KLpi48WkbxguMwWw&oh=00_AfFE4rMPfv5C83bxDXiHgA99OjyL1_1ssDe9mWP97W8sOw&oe=68056D57",
-      title: "Missions 2025",
-      date: "March, 2025",
-    },
-    {
-      imageUrl:
-        "https://scontent-los2-1.xx.fbcdn.net/v/t39.30808-6/489785704_676407405077443_5167140397539550917_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=833d8c&_nc_eui2=AeGns4zUaebQmflyM-evVF4fy5PUwOu98eLLk9TA673x4n2CZj7kI4WS0w4NxBoIgA6NEfNdXkN2q7n47NGXo4xK&_nc_ohc=ASIsqA5iKFoQ7kNvwEwWMKi&_nc_oc=AdmHpbkxM39OWZLNSB5CdmZI9_Zm7p41Ef1vhKvg4uuAEo4jThG9GvmTWaBa4nmuHn8&_nc_zt=23&_nc_ht=scontent-los2-1.xx&_nc_gid=2-Wyo765tisYO02i02GCqw&oh=00_AfGR3S1san34jJrGZMopiaGvigwH4VLNnBp7nNGJChfQfg&oe=68057F1A",
       title: "Missions 2025",
       date: "March, 2025",
     },
@@ -635,12 +623,6 @@ export default function GalleryPage() {
     {
       imageUrl:
         "https://scontent-los2-1.xx.fbcdn.net/v/t39.30808-6/483857223_654587760592741_2101639569471668280_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=833d8c&_nc_eui2=AeG9Q7MMIo8l6uR2kiHAM_91tp9aTy_rdeq2n1pPL-t16lBModNu_vTAbAyqIanuSII5Adj5Cxhra7PJW77_gEFI&_nc_ohc=FkoHsP1RUNcQ7kNvwECY8AU&_nc_oc=AdlYJBKqu2Ut80vAMbaE292bxioYuZJcW2qNdmKudFtIYqR5y0TiKnHK82wk1LDkwtc&_nc_zt=23&_nc_ht=scontent-los2-1.xx&_nc_gid=BtzRRLUWQ0pzxm7rionc1Q&oh=00_AfFaZbWxtjdi_4XuK3gsVbIeaM8m4q7uyQiWWc7AoRpIkQ&oe=6805C3D6",
-      title: "Conference In Session",
-      date: "February, 2025",
-    },
-    {
-      imageUrl:
-        "https://scontent-los2-1.xx.fbcdn.net/v/t39.30808-6/484314200_654587720592745_1358112674428002172_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=833d8c&_nc_eui2=AeGBkX6y2jdKkafB4-eCfkJIkoN4FS3tCFiSg3gVLe0IWImYrQjPq5sNqp6138Ww2lE56iDi1zj4A8CehlPAJyvt&_nc_ohc=LhQ66XAkOfoQ7kNvwGZVW8I&_nc_oc=AdnlBLccw9cGgvFQpwvYGxQDRFPbK915_Ka5bDaMZvoqksMSkK9cWNg9mTi8KGfjb4s&_nc_zt=23&_nc_ht=scontent-los2-1.xx&_nc_gid=a9JSzWexhCM2UrSJVtCMQQ&oh=00_AfHmUbtemaImUx0j61mtn8Qx7PUjbjYMqUlGJ4lETQ5BlA&oe=6805A12C.",
       title: "Conference In Session",
       date: "February, 2025",
     },
