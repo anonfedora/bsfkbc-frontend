@@ -1,0 +1,49 @@
+.facebook-video-container {
+  position: relative;
+  width: 100%;
+  height: 0;
+  padding-bottom: 56.25%; /* 16:9 aspect ratio */
+  overflow: hidden;
+  border-radius: 0.5rem;
+  background: #f5f5f5;
+  margin: 0 auto;
+}
+
+.facebook-video-container .fb-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.facebook-video-container .fb-video iframe {
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 300px;
+  display: block;
+  margin: 0 auto;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+@media (max-width: 640px) {
+  .facebook-video-container {
+    padding-bottom: 75%; /* 4:3 aspect ratio for mobile */
+  }
+
+  .facebook-video-container .fb-video iframe {
+    min-height: 200px;
+  }
+}
