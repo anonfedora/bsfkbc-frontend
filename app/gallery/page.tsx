@@ -1,8 +1,24 @@
+"use client";
+
 import { PageHeader } from "@/components/page-header";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Filter } from "lucide-react";
+import { Filter, ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
+import React, { useEffect, useState } from "react";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogTitle,
+} from "@/components/ui/dialog";
+// // import { Dialog, DialogContent } from "@/components/ui/dialog";
+// import {
+//   Dialog,
+//   DialogContent,
+//   DialogDescription,
+//   DialogTitle,
+// } from "@radix-ui/react-dialog";
 
 interface GalleryItemProps {
   imageUrl: string;
@@ -32,6 +48,336 @@ function GalleryItem({ imageUrl, title, date }: GalleryItemProps) {
 
 export default function GalleryPage() {
   const galleryItems = [
+    {
+      imageUrl:
+        "https://scontent.fabv3-1.fna.fbcdn.net/v/t39.30808-6/492490980_683676291017221_7595170252301498720_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=f727a1&_nc_eui2=AeFBvbzq26J-hxrWOC5OVueowbYCve9MxS_BtgK970zFL8xlj6Zt5lsXEA6-V-9fxUgVymD6v8oucEj5lf4fDO0S&_nc_ohc=QDqCevdv5vgQ7kNvwFWQhB2&_nc_oc=AdlW9K5c9I07ZvydaOQY76rklpcO08oqeh5bOBut5Dd0Rfu8JoAC0ICvnRTmBQnxq-k&_nc_zt=23&_nc_ht=scontent.fabv3-1.fna&_nc_gid=SD1-hCJJrPvKDPf8lEY8dA&oh=00_AfFdElBuzCkBCz_i84elNSam5GFrII9XmZ0nQ80YCiqjsg&oe=6809764E",
+      title: "Annual Easter Retreat",
+      date: "March 17 - 20, 2025",
+    },
+    {
+      imageUrl:
+        "https://scontent.fabv3-1.fna.fbcdn.net/v/t39.30808-6/487741557_683676457683871_5309453631889127545_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=f727a1&_nc_eui2=AeFSzxvN4f549WdZdTwtj_WcVQ2YaJoU38NVDZhomhTfw84ISpqB_hGPnXrJpiRnJsof9vvWXO-Nczf8N6g1UKiL&_nc_ohc=Y2NvK2LSqEwQ7kNvwHXTVxX&_nc_oc=AdnA3RRLi31QcPgtd5usBD06TAgpZ3EITwHeLZzK62_37wzYUSRIWf2OacqGMrwJCJQ&_nc_zt=23&_nc_ht=scontent.fabv3-1.fna&_nc_gid=nsI_Sur8DSpFuWvb13zO1g&oh=00_AfEiK9cCoWVujyo5MRX4W4WIyErHIG2-YmiXZyfybU8EPQ&oe=680977AF",
+      title: "Annual Easter Retreat",
+      date: "March 17 - 20, 2025",
+    },
+    {
+      imageUrl:
+        "https://scontent.fabv3-1.fna.fbcdn.net/v/t39.30808-6/486613907_683676264350557_6515541870872821309_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=f727a1&_nc_eui2=AeG1bMXtipCGE9vs8-_k_OagsB_Ks1QL5JywH8qzVAvknNz6pusvpxl7LjbLgmZ1BcM5-HXd52SblbtoR4gz_VSV&_nc_ohc=EFKU2hNJ31sQ7kNvwG8AwiU&_nc_oc=AdmDxoMvkUQU-iz8cOv-zge3qwZDct65mr-ISORCnaJNRDL2IbcjsvRfdzaIIcKchKQ&_nc_zt=23&_nc_ht=scontent.fabv3-1.fna&_nc_gid=ZwEwsxqRG5imEro0z-9hyg&oh=00_AfFFv8vKl-uiTNCFAvfpu2dl-RFpBTP0_d-5yThaNyHI6g&oe=68095235",
+      title: "Annual Easter Retreat",
+      date: "March 17 - 20, 2025",
+    },
+    {
+      imageUrl:
+        "https://scontent.fabv3-2.fna.fbcdn.net/v/t39.30808-6/487025254_683676134350570_2833669343047268061_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=f727a1&_nc_eui2=AeHjtsFm5xK8hjtsei6rPnD7Duhs6NqRT7sO6Gzo2pFPuxkg8dohrZAz2Z07cfXbDP0h-PTCF7r23YaVIAJVyvYL&_nc_ohc=SD6xhQi6ZuMQ7kNvwF93-dY&_nc_oc=AdnEcEgweQOFa3-rdTkNMl2GlKK6S_Cz_7P0iAU1wrY9bUBHzuM2l_cPl6fdSxxPRZk&_nc_zt=23&_nc_ht=scontent.fabv3-2.fna&_nc_gid=nvdM8m0bGxOdN6a6A2grCg&oh=00_AfHkXlRSNqw9Jxzhhcw3HsEry7uLubKXqvWUfZ9WCOJyGw&oe=68095CD1",
+      title: "Annual Easter Retreat",
+      date: "March 17 - 20, 2025",
+    },
+    {
+      imageUrl:
+        "https://scontent.fabv3-1.fna.fbcdn.net/v/t39.30808-6/486552929_683675914350592_337564899547750279_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=f727a1&_nc_eui2=AeEuex7Bfjg2cK6Y0S9lWMheUEYgKEC1UxJQRiAoQLVTEhz-Hdc-qP27fL76PP70B5dBbo9XEBupE75-O8Ml0sdG&_nc_ohc=LdqVYA_ZEe8Q7kNvwFnGhS8&_nc_oc=Adl0NGbHCIjs_X6O9iHY7z394TblVbnMVPf3NrKVnk0_XsflGwD5408dG7JI05wJhNo&_nc_zt=23&_nc_ht=scontent.fabv3-1.fna&_nc_gid=o-NAGzEu5mHPiBzRc8HNsA&oh=00_AfHOqev5kYpYktjERf-c8lQOTIGVzuWskciSyF_f9HI0zw&oe=68095D21",
+      title: "Annual Easter Retreat",
+      date: "March 17 - 20, 2025",
+    },
+    {
+      imageUrl:
+        "https://scontent.fabv3-1.fna.fbcdn.net/v/t39.30808-6/491304956_683675654350618_9085842875570615343_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=f727a1&_nc_eui2=AeHovCgrmmVYFN2uR2MNneVpCAYP51qnj9QIBg_nWqeP1BmanZcYiY41H9X1xHTUMOkpo1vbRBiV4En5eslTDOyU&_nc_ohc=moIci3akfWcQ7kNvwH-Co-b&_nc_oc=Adkn2lF7DKj7gytlszL2-B7KfHKvWcUyVJuyBZ-qm0saBcKpAYvcDxtMIVo3Kp7GNWk&_nc_zt=23&_nc_ht=scontent.fabv3-1.fna&_nc_gid=kCCAlNIIreur9C-cUQkJZQ&oh=00_AfGsfSdFg3Ikb6giBOqXkAh8P7nVX8oFzhL_CN4x_uz--g&oe=68094AA4",
+      title: "Annual Easter Retreat",
+      date: "March 17 - 20, 2025",
+    },
+    {
+      imageUrl:
+        "https://scontent.fabv3-1.fna.fbcdn.net/v/t39.30808-6/492395114_683675517683965_1988302329729781156_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=f727a1&_nc_eui2=AeEdwpzzpoeb5vWzHWfpP_veZOo-jf0LH-Zk6j6N_Qsf5lHe9yPYa3Kmm6ok2GC8siHkH0FyJgY47YjBbM2mKmqr&_nc_ohc=Qmng9HMWryAQ7kNvwG3ZLQq&_nc_oc=Adn8N-8sEKovBqS9H-J4y1EIVpog1koY8qBkSAJY5Qfa69I2YSVvUiO1hN39D0hse2I&_nc_zt=23&_nc_ht=scontent.fabv3-1.fna&_nc_gid=jyxhjosL1h7TN2Ln911Ecg&oh=00_AfEhi4Rh1wiSiRzs4BQZopnhrJWoWvA3gXTTktJTJeOrdA&oe=68095C33",
+      title: "Annual Easter Retreat",
+      date: "March 17 - 20, 2025",
+    },
+    {
+      imageUrl:
+        "https://scontent.fabv3-1.fna.fbcdn.net/v/t39.30808-6/487384113_683675444350639_4835870729978108190_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=f727a1&_nc_eui2=AeFJ7JGzaFj54F6ffY34FguX1_cEQ4JEtubX9wRDgkS25iN51eguFXlhGaTOQ0MdqloISzBv3EDxaODpBjoe4uE_&_nc_ohc=YMDSzbfD0QEQ7kNvwHWX2jl&_nc_oc=AdnN5TxEz-BFWtB6BiWHA1PBGpstql9UXKnCYJGf-H8tHV2Betrj-Il7ChMpFnxKo_w&_nc_zt=23&_nc_ht=scontent.fabv3-1.fna&_nc_gid=zk6uJaVLv4QpKqxbgPpRLQ&oh=00_AfHhkOKkmsOY7I0omXKprOI9t05gr6Qk-JZTghPFwcmjAA&oe=68094F3A",
+      title: "Annual Easter Retreat",
+      date: "March 17 - 20, 2025",
+    },
+    {
+      imageUrl:
+        "https://scontent.fabv3-1.fna.fbcdn.net/v/t39.30808-6/491957864_683675201017330_9029713743029658247_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=f727a1&_nc_eui2=AeHArBmZVOkkoJZ_Ybo0t2_nkNqFN6qX7aGQ2oU3qpftoUU2SJc_XB9kKP6P8gMRYqD7znElfiSO2SMelqusBV3J&_nc_ohc=1ZULLSJDYOcQ7kNvwEztnCQ&_nc_oc=Adk72am1utYPI29L0ohsQZO4-JYr5ApPtsDmqf2ArWs2ApV9zpOTrI-LQBU1ef9d2bA&_nc_zt=23&_nc_ht=scontent.fabv3-1.fna&_nc_gid=dEiMFswO7_MZaJTo0x-3Bw&oh=00_AfGe5vTfBGLyf93scUXi_7dshkQKKPaeiZxpV0KOt3HsEA&oe=68097BD5",
+      title: "Annual Easter Retreat",
+      date: "March 17 - 20, 2025",
+    },
+    {
+      imageUrl:
+        "https://scontent.fabv3-2.fna.fbcdn.net/v/t39.30808-6/490112525_683675041017346_4802577122680213963_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=f727a1&_nc_eui2=AeFMOXbIvzpHEIDk7TV--r39qVFZR3KloFepUVlHcqWgV80cK5QbS9N9NYO7YME6yhV-ZB5DxPye9x_E3wIFzRTk&_nc_ohc=98w6qj2MDQEQ7kNvwHhZb3j&_nc_oc=Adl0aVZQbLq7dopMu1pHsojUhGLniJdj2gzXq2j-tXfnLKMmmirjQlZm2fuYwJHI7Hs&_nc_zt=23&_nc_ht=scontent.fabv3-2.fna&_nc_gid=yDe_GJs62o0Cj1VrZ44syA&oh=00_AfHxkLY3Ve9fB0LW29niIKAcdpttDV6Evkg5to2qvTLmSg&oe=680962E1",
+      title: "Annual Easter Retreat",
+      date: "March 17 - 20, 2025",
+    },
+    {
+      imageUrl:
+        "https://scontent.fabv3-1.fna.fbcdn.net/v/t39.30808-6/490201325_683674321017418_3390003057674540913_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=f727a1&_nc_eui2=AeH0iS5x20HmTg2tUzbBGYt7iP8CBwEAdwKI_wIHAQB3An-tYOZrsniO6Nnyf3eN8lIgjKOO3Dzq2vIN2pSm6yfw&_nc_ohc=PjNBs4eL0TkQ7kNvwGtoMoH&_nc_oc=Adm646cCrwEHgePzSdl22HaU2L_s6Ie07cmx8XwSNUB5cG5SNvdVOJlvBue0OLSlKFE&_nc_zt=23&_nc_ht=scontent.fabv3-1.fna&_nc_gid=D-57VC4ZEyaP4MIU8xSdYA&oh=00_AfFxMfSOAg7doA6BGKA4aOmZh3BWZafIx0_dNN31D0zQbw&oe=68096A4D",
+      title: "Annual Easter Retreat",
+      date: "March 17 - 20, 2025",
+    },
+    {
+      imageUrl:
+        "https://scontent.fabv3-1.fna.fbcdn.net/v/t39.30808-6/490201325_683674321017418_3390003057674540913_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=f727a1&_nc_eui2=AeH0iS5x20HmTg2tUzbBGYt7iP8CBwEAdwKI_wIHAQB3An-tYOZrsniO6Nnyf3eN8lIgjKOO3Dzq2vIN2pSm6yfw&_nc_ohc=PjNBs4eL0TkQ7kNvwGtoMoH&_nc_oc=Adm646cCrwEHgePzSdl22HaU2L_s6Ie07cmx8XwSNUB5cG5SNvdVOJlvBue0OLSlKFE&_nc_zt=23&_nc_ht=scontent.fabv3-1.fna&_nc_gid=D-57VC4ZEyaP4MIU8xSdYA&oh=00_AfFxMfSOAg7doA6BGKA4aOmZh3BWZafIx0_dNN31D0zQbw&oe=68096A4D",
+      title: "Annual Easter Retreat",
+      date: "March 17 - 20, 2025",
+    },
+    {
+      imageUrl:
+        "https://scontent.fabv3-2.fna.fbcdn.net/v/t39.30808-6/490062869_683674231017427_3774561807263623356_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=f727a1&_nc_eui2=AeFTDjcYIEBMzZlKw1AAwXqbLTmCDZbOs1EtOYINls6zUcYS23WqpuG9CAn-DhFi-PBkNQcZa6it3x7D0DuFL-5a&_nc_ohc=4C0eyp3OQ10Q7kNvwHsfwJf&_nc_oc=AdmWcrNxMuH3FEobzk_GhAVQJCcoDN-NScLC2Rmx8mDhi9TEJ2oXhoZH9zORwuWet4s&_nc_zt=23&_nc_ht=scontent.fabv3-2.fna&_nc_gid=7hmHRE5aWQYXgPMo5jF7Qw&oh=00_AfH9W9D6Y886jg8rMPv6ofGhYA8WEP7f9VV1-_8VsW7R-g&oe=68088C3C",
+      title: "Annual Easter Retreat",
+      date: "March 17 - 20, 2025",
+    },
+    {
+      imageUrl:
+        "https://scontent.fabv3-2.fna.fbcdn.net/v/t39.30808-6/490983879_683674107684106_1782299773834335237_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=f727a1&_nc_eui2=AeHAo_ClSukR9oojLwXZyPk0yjVqpkJv0UnKNWqmQm_RSWH8bTCnBsJRzKvtLaL37HAsMX5XX16Kr_QadBuxJF8U&_nc_ohc=0OchD1cqJx8Q7kNvwEVmCP5&_nc_oc=AdnG_ujzM3I_7SSBq8pSINwADTHJB-BmvSj3ntfoipDlw2qHDU3Gb1CaXbOkM8k2HjI&_nc_zt=23&_nc_ht=scontent.fabv3-2.fna&_nc_gid=ml_A1mPBfg3M0b5tm805ZQ&oh=00_AfH6XWJdI6wwgEnYUSsP0Vhd9xZvhCW7XnP8vKsaMgH4bQ&oe=68089E53",
+      title: "Annual Easter Retreat",
+      date: "March 17 - 20, 2025",
+    },
+    {
+      imageUrl:
+        "https://scontent.fabv3-1.fna.fbcdn.net/v/t39.30808-6/491652178_683674004350783_6469029570958402559_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=f727a1&_nc_eui2=AeEvCX0cnEwbfu8yRtzFwIWk23AqDvqC9g_bcCoO-oL2D-U_5anJP8n76O9JuYWjKi_VuYbxDxyHfX7dDcoQ6WWl&_nc_ohc=0tjmY7w5uKcQ7kNvwEt6w1s&_nc_oc=AdnSk91c_rfggWlvZgrBZJBdPaAdSTw0f_QcizZOAu8VYXLih-WAWdaMGiG0IvwhUss&_nc_zt=23&_nc_ht=scontent.fabv3-1.fna&_nc_gid=hz_3na3O1VrkLeReR_uoGQ&oh=00_AfFHOwvfsAO_sFH815y1XPG2HPjsyqqThoydk_yQGhVZSQ&oe=68087712",
+      title: "Annual Easter Retreat",
+      date: "March 17 - 20, 2025",
+    },
+    {
+      imageUrl:
+        "https://scontent.fabv3-2.fna.fbcdn.net/v/t39.30808-6/491022048_683674024350781_3765569754648817722_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=f727a1&_nc_eui2=AeEBm7YvIbJ_-doh57rEqV86WuQ8XI8bUGRa5DxcjxtQZO8gBAgyb_d_MevyqbKdNioYEeFVPyEoLFbdrxPyV5lq&_nc_ohc=Do_HTjGv3-gQ7kNvwELjTQV&_nc_oc=AdkVCV3dI8oicYLnKiYbgVpNpq7eRHwBzlG5fOjZD18xq43cODpPLpYSKL3YGDyP3D0&_nc_zt=23&_nc_ht=scontent.fabv3-2.fna&_nc_gid=mNFQYfTo9YbuhPO23hNjqw&oh=00_AfE14HWJTmgMrg9tuwsF_nDF8i86SBT-VLerUg2MoAh8nA&oe=68088A4F",
+      title: "Annual Easter Retreat",
+      date: "March 17 - 20, 2025",
+    },
+    {
+      imageUrl:
+        "https://scontent.fabv3-2.fna.fbcdn.net/v/t39.30808-6/490212904_683673974350786_1912299995458491816_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=f727a1&_nc_eui2=AeEL6hVmkDVztvYyeY3EUeDVDwXORfqTg58PBc5F-pODn1g489SkK7wawN7eF9kGAww8v1KFcZYXMs-GDbzI9Xhk&_nc_ohc=eOHiduMKVNwQ7kNvwG5Z_fy&_nc_oc=AdmqncE8yXdMbhyODTv-jQazCS1C5YSi7bCXPeVn4DuOoh8aajrU3eR1d2JwFtTpWP8&_nc_zt=23&_nc_ht=scontent.fabv3-2.fna&_nc_gid=XuObPxD6bdbbTKhgAXnzHg&oh=00_AfHzX_ve_WkLfKs0KGoCIHwnhiMBhnnPH9URmdc2YZK6FQ&oe=6808A6BC",
+      title: "Annual Easter Retreat",
+      date: "March 17 - 20, 2025",
+    },
+    {
+      imageUrl:
+        "https://scontent.fabv3-2.fna.fbcdn.net/v/t39.30808-6/488076773_683673637684153_8782305705931665471_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=f727a1&_nc_eui2=AeHtVvDtZug1eWPx-5Y_3Owswr973uLeVhbCv3ve4t5WFnSjUZdaRgsElHybCHa_dNrZuCNfHxC9Qlg1n3e9Aj8h&_nc_ohc=fCRL91aSpwkQ7kNvwHnx_y-&_nc_oc=Admroz5Gms26rSmmVxMzFAYbpOzNss08kt8vQg1pVUUHRI9Lr06kUE6cx5LycfGrO-g&_nc_zt=23&_nc_ht=scontent.fabv3-2.fna&_nc_gid=xpsQyjf_qCiFXPnX9oGVUg&oh=00_AfE9QoiAnC6XOG72Dugks49vi1lU2aCv0lfHr6rzzcglpA&oe=680878C0",
+      title: "Annual Easter Retreat",
+      date: "March 17 - 20, 2025",
+    },
+    {
+      imageUrl:
+        "https://scontent.fabv3-1.fna.fbcdn.net/v/t39.30808-6/491368396_683673557684161_827901760798447385_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=f727a1&_nc_eui2=AeG1SbIzm7NPaL55_xLxra1qspDrnNPeqiiykOuc096qKFyX0TttEzajXxgtr896mAi9O4BQeg_EjBivrSDsNUH-&_nc_ohc=GIOYrgnyjnoQ7kNvwE7Yr2t&_nc_oc=AdkwhGPA5ovuqxZOTMuV96kBl15JE5Zv3JIK9sM00IuKI1U6B-_9kqd4lE3oJoC1DAQ&_nc_zt=23&_nc_ht=scontent.fabv3-1.fna&_nc_gid=s6i3-z4-ttREdaJYUDmDHw&oh=00_AfG4TYWj_OvugPEo7vkJPrB3kMG6VSDw5F4-RIfSHFZTPQ&oe=68089066",
+      title: "Annual Easter Retreat",
+      date: "March 17 - 20, 2025",
+    },
+    {
+      imageUrl:
+        "https://scontent.fabv3-1.fna.fbcdn.net/v/t39.30808-6/489609396_683672887684228_6119582557550264947_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=f727a1&_nc_eui2=AeHo-xacB_Xe_jiY5lXwQwoFBiL6IXnMUoUGIvohecxShf3jYK0rQdbMPA2XIcg0UcUi_AqfDCugeLu4i4HefqRl&_nc_ohc=1ZmSm743oksQ7kNvwGpZKQN&_nc_oc=AdkXUCCdWIRntjT09xDCa3CD9AsMKBkRwcyGMMZWkx5tZtslmHzAVQp_x988bC2Oyq0&_nc_zt=23&_nc_ht=scontent.fabv3-1.fna&_nc_gid=kAXDRe1KIrY_U0Up_W8e9w&oh=00_AfHq677mbHcAMpNahh-qmM9KI_vIicSvqCPycEtP9jxpcw&oe=68087EC3",
+      title: "Annual Easter Retreat",
+      date: "March 17 - 20, 2025",
+    },
+    {
+      imageUrl:
+        "https://scontent.fabv3-1.fna.fbcdn.net/v/t39.30808-6/491808865_683672757684241_6924257744254362390_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=f727a1&_nc_eui2=AeEcQYY7p2Elb59uMe4puukd_Kn9XIRjV7P8qf1chGNXs1iqluNbu4-FVWGrEV2niKW33HW2jBxvXHy3O96_-P56&_nc_ohc=n2PwcCgeKf0Q7kNvwFgVY20&_nc_oc=AdmOawLoUH3KTSBT4BjIuGxlyzhNCjZCCaVjTFunnwSRevzy-d5ndgDz_c4UvCRRel4&_nc_zt=23&_nc_ht=scontent.fabv3-1.fna&_nc_gid=6HvoRnRpdB-kcMNVEY-o0w&oh=00_AfEWl_O2vvxJx0EYYsCC3mtL9RFQk_dWp-CUlmw5eKeeag&oe=68087EE9",
+      title: "Annual Easter Retreat",
+      date: "March 17 - 20, 2025",
+    },
+    {
+      imageUrl:
+        "https://scontent.fabv3-1.fna.fbcdn.net/v/t39.30808-6/490943489_683672741017576_5343614552431829769_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=f727a1&_nc_eui2=AeE7meZvBpsovo-iK9Jqf4OFVJYYm2wd4vNUlhibbB3i87pd1debZZvN19J6VtOwZ5qoZB33hin_J29I_7PpWRmK&_nc_ohc=ol0IYEOxXBMQ7kNvwEdGy1y&_nc_oc=Adkiir6TfTsr0hXEFEPLcJ8cGLTcnTRaW1Y6PlD30zcIeKs-apw8rv0tL0f1lGvSuDo&_nc_zt=23&_nc_ht=scontent.fabv3-1.fna&_nc_gid=X0EQx60Wux75cUCqGqitCA&oh=00_AfFECB1SfbHpOFIrALzcIAIkgzmjlNxUnFLC9PeQG4CMPA&oe=6808ABF5",
+      title: "Annual Easter Retreat",
+      date: "March 17 - 20, 2025",
+    },
+    {
+      imageUrl:
+        "https://scontent.fabv3-2.fna.fbcdn.net/v/t39.30808-6/491289320_683672647684252_6007748514557780421_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=f727a1&_nc_eui2=AeH6IZuzZ9jl6XB1TBKt9umuXYHm-DANJAFdgeb4MA0kAS4JP269-SZCoAfTR16blksIubpqLmAofLyLQXT1aOBV&_nc_ohc=izl7QjHq_yQQ7kNvwGb_-id&_nc_oc=AdkYM2X6D9DAqQ9AI8Ahh7vEtCF4IsQ8GGkkbKNv-gADQk-DsuWefbMDP3zfJzADqD0&_nc_zt=23&_nc_ht=scontent.fabv3-2.fna&_nc_gid=SwxFKnePlkJLdfmdsMh1Cg&oh=00_AfHr7nr2Oxzy6gt6q9K0k9uJGO4V71tqYp8hQaTwcZTGCw&oe=6808862E",
+      title: "Annual Easter Retreat",
+      date: "March 17 - 20, 2025",
+    },
+    {
+      imageUrl:
+        "https://scontent.fabv3-1.fna.fbcdn.net/v/t39.30808-6/487065879_683672551017595_7605059423380826552_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=f727a1&_nc_eui2=AeHRxVskTsA2aE9XbG7fr2S5VuyXwXg6tVdW7JfBeDq1V8BlzNCZvQM5ABnwfBCo0tlWUPQIS-6BKGXuUlRdjQx4&_nc_ohc=FLaGVNu7S4cQ7kNvwFswr1P&_nc_oc=AdkuiDm1f4eX32R1sUrr0ZRtP2wLU_TeAca3EcLbUR9PzDG1YtJ5ag5FzDO6Gh3-OAA&_nc_zt=23&_nc_ht=scontent.fabv3-1.fna&_nc_gid=Um8aADkmTuER9e3_cYmUWQ&oh=00_AfFwqzVu96vC3yt1nd8kQIxp8WKiIdoJV3OCGvFmFGpJxg&oe=680875C7",
+      title: "Annual Easter Retreat",
+      date: "March 17 - 20, 2025",
+    },
+    {
+      imageUrl:
+        "https://scontent.fabv3-2.fna.fbcdn.net/v/t39.30808-6/491921903_683672461017604_4360293329426902575_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=f727a1&_nc_eui2=AeHHEuUtjsJKEXWULhT6Yh9ymq3KRgADegOarcpGAAN6AyPN2NFQPqVjgYDIrHuTp_EtsI30aC99hCyjN60hyJBO&_nc_ohc=84lrcYv6fRAQ7kNvwGxPB7M&_nc_oc=AdmjCFSDerrjSYh8YrDw5Mf-OTxvegVI4AZPDeqzMJ-MjLw0rO4WnJ0tVLYQy9DHfl8&_nc_zt=23&_nc_ht=scontent.fabv3-2.fna&_nc_gid=bePxr9RoS6to7mVUVOVA2A&oh=00_AfGzS4oLaMs3oDrJriOVXSqVS4YOrWC5LLdTQT_JrJXP6A&oe=68088140",
+      title: "Annual Easter Retreat",
+      date: "March 17 - 20, 2025",
+    },
+    {
+      imageUrl:
+        "https://scontent.fabv3-2.fna.fbcdn.net/v/t39.30808-6/491205678_683672544350929_9197920172090077546_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=f727a1&_nc_eui2=AeFFLKmasKnXW1KlvF87lqWkS5LEGKVKcmlLksQYpUpyabNxN6vABAzKwttBLiJGhWQucPYN36cDAjszQXG-nI6z&_nc_ohc=V4HPJq5swSgQ7kNvwGZY-qJ&_nc_oc=AdnBg3I6iWJOodwmhr4hff1HvvoypIBhPrvbMxNSqXzYZGLuSlbx1hH_Ut1o8zu17Us&_nc_zt=23&_nc_ht=scontent.fabv3-2.fna&_nc_gid=W1TKAAYDVH21I25WWf9eyw&oh=00_AfGKDXrEKideHqBowx9MpvFy0woVo6bZCPpLFkjCAYi2gg&oe=6808A500",
+      title: "Annual Easter Retreat",
+      date: "March 17 - 20, 2025",
+    },
+    {
+      imageUrl:
+        "https://scontent.fabv3-1.fna.fbcdn.net/v/t39.30808-6/492494418_683672434350940_2306475740446632568_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=f727a1&_nc_eui2=AeHXot0whXXsYN1LjbCt05vnKXeElyknhsopd4SXKSeGyn9dfr8gKD5-K5z7ybOW5SypEmmB95wrbf7tlGca97EO&_nc_ohc=fkny1jCKvykQ7kNvwEn6JHt&_nc_oc=AdkbC63K2MVax6zU6QIi6vbSLEYG4VVbFevJpOqz-R5K8ImN3quwE-47E-E4ZIRHQTI&_nc_zt=23&_nc_ht=scontent.fabv3-1.fna&_nc_gid=vwidz7Okt-6hAQuH2WQu1A&oh=00_AfHKG2TrVpBnaYmmoFikoaWpzT9qmbKI6wU7OpY6xydEPA&oe=6808976C",
+      title: "Annual Easter Retreat",
+      date: "March 17 - 20, 2025",
+    },
+    {
+      imageUrl:
+        "https://scontent.fabv3-1.fna.fbcdn.net/v/t39.30808-6/492004389_683672241017626_9087679781212999888_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=f727a1&_nc_eui2=AeHzqNGquR1X3Hlp73vleI-5DpBKcRMZzCMOkEpxExnMI7vybG-PE6WEi3w47kH3rgTpKAVbS_Kfbflg1z-i_iej&_nc_ohc=PvftQJ5ZTU4Q7kNvwEhlha0&_nc_oc=AdlHtZ1xNxNEco7gDW1B7dzEFTw9-qJ6aLKZm-GFyJRVFm8N0zrEjSm-vUCTVWAU7-k&_nc_zt=23&_nc_ht=scontent.fabv3-1.fna&_nc_gid=YeX4cMWLmhZz1sVM44rm8w&oh=00_AfGALbwhr1fn133s69C6XpNsxPbP9Uc0XWDYNYeBJKxsTA&oe=6808A500",
+      title: "Annual Easter Retreat",
+      date: "March 17 - 20, 2025",
+    },
+    {
+      imageUrl:
+        "https://scontent.fabv3-2.fna.fbcdn.net/v/t39.30808-6/491407850_683672094350974_4416120256849264270_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=f727a1&_nc_eui2=AeGiG9ut0BfEo1LqD7IrbkoMVxogjHeHMshXGiCMd4cyyJwZJHh_zKvOXicySTWci4KAoLdI5cd_fsi9JTcryMPX&_nc_ohc=s6VxkREhbdEQ7kNvwHQBRi1&_nc_oc=AdmUGJgSM2QkEvU-WawrYCdUyWRjqcRwv584a7VGBTWjzqDfU31nQ0IUZ5IU925eAQI&_nc_zt=23&_nc_ht=scontent.fabv3-2.fna&_nc_gid=WX2P4-Cdgp8wu_I_FD21Yw&oh=00_AfFu_zLDJG2NtQz0Pr2W38fx0kVVXLOL784HQor9O_2bDw&oe=680884E2",
+      title: "Annual Easter Retreat",
+      date: "March 17 - 20, 2025",
+    },
+    {
+      imageUrl:
+        "https://scontent.fabv3-2.fna.fbcdn.net/v/t39.30808-6/491045152_683672037684313_6547077163924882586_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=f727a1&_nc_eui2=AeEGp93GEf6Gc3qGiGTOL-l5Ax2dnZ6JO08DHZ2dnok7T3pABLfNjSRV4yDCo0l-ArjaPBMiRuUpSnufUMN0w9-G&_nc_ohc=VYS29wVU5vEQ7kNvwGXEopQ&_nc_oc=Adk2n3GVFAgZs60lUtiakAmc2zv6gr74_WIfvnx1-yN26HgMtwC0UClXxV8-U1v0j6s&_nc_zt=23&_nc_ht=scontent.fabv3-2.fna&_nc_gid=lzYO40NLpyMOZ7OMenOHtw&oh=00_AfGpdhZasXu-R3UmSnueqv36D8hREiwmtkEhOoSe-UoK1w&oe=68089A71",
+      title: "Annual Easter Retreat",
+      date: "March 17 - 20, 2025",
+    },
+    {
+      imageUrl:
+        "https://scontent.fabv3-2.fna.fbcdn.net/v/t39.30808-6/491183601_683669271017923_7927536033943389489_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=f727a1&_nc_eui2=AeFeN4oFm5TRo6JQtw7veGbOExA_u5HhDkkTED-7keEOSW4yWa0GuduTT3v9vTp0sPh-jiCVWVW8nZ7I5LxWiVM3&_nc_ohc=B9XPoXb2uYwQ7kNvwHu7Mby&_nc_oc=AdniiTdNNA7aJLUULcY3kQFDdcY9ZfrUkcltsIOXTxU2ttlD2G-vIwUZUm5xVuZSCfw&_nc_zt=23&_nc_ht=scontent.fabv3-2.fna&_nc_gid=zTX71Iea-Qyo0euyfVFcSg&oh=00_AfGsMPwZqqYpVo70B7fDUO_T_aLwkBKIJ2xT8JfwodlAXg&oe=68087EC8",
+      title: "Annual Easter Retreat",
+      date: "March 17 - 20, 2025",
+    },
+    {
+      imageUrl:
+        "https://scontent.fabv3-1.fna.fbcdn.net/v/t39.30808-6/486609426_683671961017654_2538714461477068714_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=f727a1&_nc_eui2=AeF8Mdrf24XefrTk9H0Qa-hL9ZvssLjtEdv1m-ywuO0R2-6Aax-ekI40aJgF7puI5wpDb5OeLXf90CxYYbIJDDdb&_nc_ohc=z5rhR7VwGdMQ7kNvwE1bkV8&_nc_oc=AdmPBjafkJrX6tfW-PDRXdMEbsrBC2I6eewG3Z81im3qso1-c3O_F5Yu9ucb4q1HFNE&_nc_zt=23&_nc_ht=scontent.fabv3-1.fna&_nc_gid=SFpxw2qYCvN2e9fJ9rqenA&oh=00_AfEPnW0oc5OwLyvgQYIwkZEU1tnXwB6mWbWw2vRZX-cC5g&oe=68087DAE",
+      title: "Annual Easter Retreat",
+      date: "March 17 - 20, 2025",
+    },
+    {
+      imageUrl:
+        "https://scontent.fabv3-2.fna.fbcdn.net/v/t39.30808-6/490639872_683671824351001_4879034025188848958_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=f727a1&_nc_eui2=AeGeU-hsSvkAHngcYombq7ZbsHqOB1C-cCWweo4HUL5wJeOGTOlwu_VHqWZNEcYoHDmeVaJ304dVzDWxGTbt2dA3&_nc_ohc=mk1w6LazBzgQ7kNvwF3t6RY&_nc_oc=AdnJlRxlsCkDiOUFEJHVjQO2qCG9YChBT5wBeeQTa8IPkBznLsLYJDvrjTaDCdGJIXM&_nc_zt=23&_nc_ht=scontent.fabv3-2.fna&_nc_gid=FoLMGzJwBtWghyPMSj_y2Q&oh=00_AfFryKsCZTSY-MssEeB9z0ZubUe02AK1DLajcEoR_xx4ig&oe=68087F1B",
+      title: "Annual Easter Retreat",
+      date: "March 17 - 20, 2025",
+    },
+    {
+      imageUrl:
+        "https://scontent.fabv3-2.fna.fbcdn.net/v/t39.30808-6/491802036_683669027684614_9174107926650904122_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=f727a1&_nc_eui2=AeHrC2whE4KJ_UXi4Gol6kyFJrsUa7qp8P0muxRruqnw_Y54813Iz4QEHV7x3ixaMBRZ9FRCUoMSrayRqfMeJiPG&_nc_ohc=q0GXvi4MQLIQ7kNvwHJBBTC&_nc_oc=Admn4YTodjUW-Yb1XOYDnyoaJUXDPJ07vZHwqx5oATjr242wmiQuw-3HWzP_Rp6-duE&_nc_zt=23&_nc_ht=scontent.fabv3-2.fna&_nc_gid=x4sNOwGz8HAuQ9uFTokf6w&oh=00_AfFyZ-XxroZU0Sa88L2NHAoZ_y1Vt2_hYX_6rpxk4Qq3yA&oe=680889D0",
+      title: "Annual Easter Retreat",
+      date: "March 17 - 20, 2025",
+    },
+    {
+      imageUrl:
+        "https://scontent.fabv3-2.fna.fbcdn.net/v/t39.30808-6/490377757_683671621017688_6655343519177975488_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=f727a1&_nc_eui2=AeHlWur5CPKItCvTX8yT8npS_B2KyZdS_Kb8HYrJl1L8poHyoNsDm3vxOpi59zqYRd2OCxWuLB3K00PY4cv9B6vj&_nc_ohc=gLUFsfv4P5AQ7kNvwFDy0ni&_nc_oc=AdlvIRfCxSGD4TOr4cwPcaIMgdlLw78ozvC0qr3MqY4UHnzmFuZGi9_HZo0FgKg0-Kw&_nc_zt=23&_nc_ht=scontent.fabv3-2.fna&_nc_gid=MPdIQxyuaYva_6zS0gkpLw&oh=00_AfGe-wIczbx-tOf3ZmqknFwUakW2t2n54sSWEjpytS8hQw&oe=680895A9",
+      title: "Annual Easter Retreat",
+      date: "March 17 - 20, 2025",
+    },
+    {
+      imageUrl:
+        "https://scontent.fabv3-1.fna.fbcdn.net/v/t39.30808-6/489928422_683671504351033_2510729486316391740_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=f727a1&_nc_eui2=AeGB3fPyMUASm9RkP31Io6aTLw4ENwbvdZovDgQ3Bu91mha72Zq84blKrhfuN98IU8jxZw7RzBzhjYATdYhdVum3&_nc_ohc=UD_4DreLkGYQ7kNvwF8Xpvk&_nc_oc=AdmBkMeO4v71qzXADbc1ip1y9gYew9RMZrpmA_G3fQvdmHPG3RlVDd22zHJ3pGUogxU&_nc_zt=23&_nc_ht=scontent.fabv3-1.fna&_nc_gid=Uw_H8o73yfalnm0T1o5dCA&oh=00_AfGzRw6BGm5KeFU1bA_N_lLNMWDNxtfAfYWxJbVp8PzH3Q&oe=680893E3",
+      title: "Annual Easter Retreat",
+      date: "March 17 - 20, 2025",
+    },
+    {
+      imageUrl:
+        "https://scontent.fabv3-1.fna.fbcdn.net/v/t39.30808-6/489928341_683668217684695_3484780728367098730_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=f727a1&_nc_eui2=AeHjxvDCxMn9tzFW3c8N_CmNHPj8xDPLyUAc-PzEM8vJQITUWsBsJ1Q6bjfopd18SMChUfRa7VsFMdPXCUR_Jc_K&_nc_ohc=nVFXT7NeeJ8Q7kNvwHlCj7a&_nc_oc=Adm9NBuZpBCw99EEB3ZuLJUfq4DUHCZaIyVoWIltPX1CBtbzEB-TCi-dYAKUO4PQjDk&_nc_zt=23&_nc_ht=scontent.fabv3-1.fna&_nc_gid=aFNE4pH0ppP_ggwOfPNqHA&oh=00_AfEz5femKiFtFgm4iBEe2CGkLLFbw3FIhRxAthNM_Q63fg&oe=6808744F",
+      title: "Annual Easter Retreat",
+      date: "March 17 - 20, 2025",
+    },
+    {
+      imageUrl:
+        "https://scontent.fabv3-1.fna.fbcdn.net/v/t39.30808-6/489928422_683671504351033_2510729486316391740_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=f727a1&_nc_eui2=AeGB3fPyMUASm9RkP31Io6aTLw4ENwbvdZovDgQ3Bu91mha72Zq84blKrhfuN98IU8jxZw7RzBzhjYATdYhdVum3&_nc_ohc=UD_4DreLkGYQ7kNvwF8Xpvk&_nc_oc=AdmBkMeO4v71qzXADbc1ip1y9gYew9RMZrpmA_G3fQvdmHPG3RlVDd22zHJ3pGUogxU&_nc_zt=23&_nc_ht=scontent.fabv3-1.fna&_nc_gid=Vasffw_MYF2Seycz7GYuMQ&oh=00_AfGKLNpAtcIhYsoz8tIDmcOSQo0vAbEWIEAcNftKTcE0nw&oe=680893E3",
+      title: "Annual Easter Retreat",
+      date: "March 17 - 20, 2025",
+    },
+    {
+      imageUrl:
+        "https://scontent.fabv3-1.fna.fbcdn.net/v/t39.30808-6/491625161_683671331017717_6579428598683558296_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=f727a1&_nc_eui2=AeEpckuoVruENTYWidEmUhWlCx0USGsXToALHRRIaxdOgK0hMnWLeCeV257r3NqEIiuizJsLpSNtPPWkDOlY55fq&_nc_ohc=fYHfypXBeLQQ7kNvwGVYDB4&_nc_oc=AdnyGNuf5qqFWJPOE5FEg-nShLX3zzPWzrjwHJ8ZDaMUuZ1juisoMdUvh1SgPWQ6IKU&_nc_zt=23&_nc_ht=scontent.fabv3-1.fna&_nc_gid=uXfFtR0ogyqODDRytaafWA&oh=00_AfGzMS3UMFeHuO5UIzS3Mm0-6q_Qd5OI3DGaQvnelhWvXw&oe=6808837C",
+      title: "Annual Easter Retreat",
+      date: "March 17 - 20, 2025",
+    },
+    {
+      imageUrl:
+        "https://scontent.fabv3-2.fna.fbcdn.net/v/t39.30808-6/491952229_683671224351061_5726993942379312413_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=f727a1&_nc_eui2=AeEjWG3QGFQmiWRKiPCDuZN8jnUbev4kPU2OdRt6_iQ9TbWHkySKHHhGD0n4Gl9jDQQH9-TOgGhDRpnqgoSuGGea&_nc_ohc=6l5k0QILFLgQ7kNvwHFgfB0&_nc_oc=AdnPD-vPCmjZEM16gsW6sD2t_hHP2a0S_ZmDcihr__JdV9NtPbzJKB3ZBDG8Nbe9gMY&_nc_zt=23&_nc_ht=scontent.fabv3-2.fna&_nc_gid=7OUr7d4710ExMlNx7UkXMg&oh=00_AfFMi9fWPQXoyPHYgz8RsA5L7x89XwsR9KwW4ugs7_cMJw&oe=6808A66A",
+      title: "Annual Easter Retreat",
+      date: "March 17 - 20, 2025",
+    },
+    {
+      imageUrl:
+        "https://scontent.fabv3-2.fna.fbcdn.net/v/t39.30808-6/491920399_683668914351292_6045743657897765925_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=f727a1&_nc_eui2=AeF1teM4mfLh1hboYoGwgd45DbXrQc5qPcoNtetBzmo9yllgmWVD6oUQJ0xEisvjAqXZ51GkxxRcxWwvoa94C4Xg&_nc_ohc=yfgqLntpKJMQ7kNvwGZ6lv0&_nc_oc=Adlu_xdyERT9bVvN48bYQrFe80R0gIOag0hoGjvMCsY61kNqverZ3pLUvxURg18TG8k&_nc_zt=23&_nc_ht=scontent.fabv3-2.fna&_nc_gid=D6qXk-p6shdHY_3VSETObw&oh=00_AfG72OlWCe_1UnLWY3RiLPIsbjaSgmy8kygLT_llLCRvbQ&oe=68087D68",
+      title: "Annual Easter Retreat",
+      date: "March 17 - 20, 2025",
+    },
+    {
+      imageUrl:
+        "https://scontent.fabv3-2.fna.fbcdn.net/v/t39.30808-6/491800127_683671111017739_8900069126737708738_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=f727a1&_nc_eui2=AeGl8j9uq4Gr7XfvfIaYNf0zeJVW20VXzGx4lVbbRVfMbDuy7NspUG-VD2iREtkaOuVaTNAwNZU1Jd8oCtwwdBBA&_nc_ohc=1sNpv66PKW0Q7kNvwFCKjw5&_nc_oc=Adk9ixQOzE1y91keYp-w7-Ax8W5VAx2PzxDNjgSUPwYww4QlSsuBrQWCpe5WRyl9bjg&_nc_zt=23&_nc_ht=scontent.fabv3-2.fna&_nc_gid=8dm3IiscGVQXM-UbZK8fCQ&oh=00_AfEqzszUh8nbAuUBXws5dD21RMxduEw7kug3kaboftx40w&oe=68088CD9",
+      title: "Annual Easter Retreat",
+      date: "March 17 - 20, 2025",
+    },
+    {
+      imageUrl:
+        "https://scontent.fabv3-2.fna.fbcdn.net/v/t39.30808-6/490713018_683668481018002_3930030663336138938_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=f727a1&_nc_eui2=AeEja1WAYNyoEuM_jTssWF2E6w_qB8SPqsvrD-oHxI-qy82sPAZxz17yY3LuB1RHNljabbFuBlAqMpwT0wH2QYyX&_nc_ohc=Dx2hk0Q0t9gQ7kNvwH0uqLy&_nc_oc=AdmR78lyuFWIsYq-ipzkzri5PT7QHdX5X5wwmWx24Q7CXuCe6PsMvp0jm5mEiiGosCc&_nc_zt=23&_nc_ht=scontent.fabv3-2.fna&_nc_gid=TBPllLNj3aUsa7cFcQa5yg&oh=00_AfFCoy9WB5UAJEbx8tHlPAIH14OI72hw1I5L3N1DwpayQA&oe=68087FF0",
+      title: "Annual Easter Retreat",
+      date: "March 17 - 20, 2025",
+    },
+    {
+      imageUrl:
+        "https://scontent.fabv3-1.fna.fbcdn.net/v/t39.30808-6/492404863_683670681017782_5861374616053963249_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=f727a1&_nc_eui2=AeG_gfEFPKfAjsPdZXPin_WpV-PFPjO4qudX48U-M7iq53faM4XLin-nWh5lPJia4G1QX2ef9Zv7AhntdIT9Ld--&_nc_ohc=sp3mU0S_-cMQ7kNvwHofPRw&_nc_oc=Adk1j2n1TjOR1Esh3mdtbBBdvtQx8qij-NJ8JVqM0MoDg5KhgyJj-t_4VkfCHoHttKY&_nc_zt=23&_nc_ht=scontent.fabv3-1.fna&_nc_gid=ncRfj2OVsg3VlWxJPkch4g&oh=00_AfFFidWJzOI6EUUnQJ0wUgVFhmftjUiGUnLhD60UUAgwSw&oe=680894C7",
+      title: "Annual Easter Retreat",
+      date: "March 17 - 20, 2025",
+    },
+    {
+      imageUrl:
+        "https://scontent.fabv3-1.fna.fbcdn.net/v/t39.30808-6/489926513_683668227684694_1812277412023543132_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=f727a1&_nc_eui2=AeFLmNEfjOoWpZlMfYTDU7dbvObTlIoUfOG85tOUihR84TO3yThe-pyy6bLG8IdA1wc-g2Xgry-rOG5OOHqSyWlY&_nc_ohc=7LkJM9JGT_8Q7kNvwFOIRGr&_nc_oc=AdnoodeCX8tQVtTXLwau8Irh_tgIydm_PWh1akAk_P5MayVf8wCaF1lCWqUvgg8aKAU&_nc_zt=23&_nc_ht=scontent.fabv3-1.fna&_nc_gid=CXsYOjEXXKosYdmp8UOrtg&oh=00_AfHf4mbOI6-2SmFhppEM-mWWdfkU1UwKtzau-w3qwwtg_g&oe=68087E2F",
+      title: "Annual Easter Retreat",
+      date: "March 17 - 20, 2025",
+    },
+    {
+      imageUrl:
+        "https://scontent.fabv3-2.fna.fbcdn.net/v/t39.30808-6/491339576_683668204351363_4378500384204526360_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=f727a1&_nc_eui2=AeEdpEVE56i1_h42ZIQ4HLRIn1F__guzwO2fUX_-C7PA7cM3Mz08ObuD1DtQqZCM37tfbBpOpyQW9p3UqZSSBSk_&_nc_ohc=0lqY70pV-L8Q7kNvwFYo9lU&_nc_oc=Adl4eXibxmc78Ng23xQuBV96A3cN0Pp0XRfY8Tuujd3N7RGp2zAckNTtF9PKcYHcovk&_nc_zt=23&_nc_ht=scontent.fabv3-2.fna&_nc_gid=i8NRU9Moz54OgPQq2RZ3sg&oh=00_AfFm8l3BhYqwhDqtIyFEXmIpZCTffuCt1VUoUkw4hHhf8Q&oe=68087CAE",
+      title: "Annual Easter Retreat",
+      date: "March 17 - 20, 2025",
+    },
+    {
+      imageUrl:
+        "https://scontent.fabv3-1.fna.fbcdn.net/v/t39.30808-6/491011739_683667774351406_1035949152009064438_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=f727a1&_nc_eui2=AeF_8IInV1wa5-AdR61_0c95tywPznzXj4S3LA_OfNePhJwO5PCyNnTRa71Zx8p3xJ1bpVZtjckwEhWHZKNRTyeI&_nc_ohc=-aw39C3_pSMQ7kNvwEE_JMm&_nc_oc=AdkK9VYHaqZOISNGxj-f4EmZUBhukO9pH7eH7CoZiawXvc9XrhfiIZ4RJpSMMGOOWbQ&_nc_zt=23&_nc_ht=scontent.fabv3-1.fna&_nc_gid=wt5s8aNHIbRIrma7OSSvIA&oh=00_AfFn-zi4thKLYKZtkSjZBBLh2SMCxnYHQXKAkYZToLrBbw&oe=68089054",
+      title: "Annual Easter Retreat",
+      date: "March 17 - 20, 2025",
+    },
+    {
+      imageUrl:
+        "https://scontent.fabv3-1.fna.fbcdn.net/v/t39.30808-6/490194764_683670287684488_799409964169458377_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=f727a1&_nc_eui2=AeGPuo-rhLot0lMV_ev_D-wSYY_M4LfW_Nlhj8zgt9b82VzkAvsxmV998BR6qj6nWB4nI7pAyy8c16Ok2oZBGjaD&_nc_ohc=ChHN5ceuYcQQ7kNvwG_ZHaA&_nc_oc=Adnt9pCuwuPmqteO46j7UJZNhFVSTE2ixjL9Jyydkf574E7jGIE3mWreZnFxe1c-2Js&_nc_zt=23&_nc_ht=scontent.fabv3-1.fna&_nc_gid=ih7gX79yPdsoADa21q5zUA&oh=00_AfHHvdoqn33fWRMGhsAhJvoiaZFiJieW9xWKVG7ApSIxog&oe=6808969B",
+      title: "Annual Easter Retreat",
+      date: "March 17 - 20, 2025",
+    },
+    {
+      imageUrl:
+        "https://scontent.fabv3-2.fna.fbcdn.net/v/t39.30808-6/490765260_683670177684499_7708662824357548014_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=f727a1&_nc_eui2=AeGy6hnB8aRBJyb2WpSiXAQqBiHXS2g3HDEGIddLaDccMTH_vTGgiAF1941i6gcjuGso3aVrtxckgBLU27Ikgrb6&_nc_ohc=Vg7RY2UgzhQQ7kNvwFRJflZ&_nc_oc=AdnoDZZa1JzZgNijURIE71aduiJC5olKlsIdotVCsQTAt7qiQJ2MmW1bZyULv9JPR_I&_nc_zt=23&_nc_ht=scontent.fabv3-2.fna&_nc_gid=v8e_eLq5fVtuGMp2c-i4pQ&oh=00_AfFAVeAAXP7QrKxTcqlkaPtIAWfauJMKIjstvUf96YxXCw&oe=68088A55",
+      title: "Annual Easter Retreat",
+      date: "March 17 - 20, 2025",
+    },
+    {
+      imageUrl:
+        "https://scontent.fabv3-1.fna.fbcdn.net/v/t39.30808-6/491296810_683667831018067_1672867861543141812_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=f727a1&_nc_eui2=AeHcg0G7tFjbUM0BH_OskyuBh8HNtKh0hP2Hwc20qHSE_YlnHBvXJQfW7J5ac7wu4vieU7lK6L75mtTtoyu0Qpkm&_nc_ohc=ECGMcVPjmpAQ7kNvwGF6-TX&_nc_oc=Adk8mVJTeheqfq7ctQlpyQ7IsfxHwCt9tzf1E1aaDuyJlgbNgXGJG3W7BDqSKustt4U&_nc_zt=23&_nc_ht=scontent.fabv3-1.fna&_nc_gid=1M4lqHlCVfh3ns9a8JfheQ&oh=00_AfGEgxx1LYxIFggVgr-4vQwTnyAD5QxQWEnLVhD5-69zkg&oe=6808A38F",
+      title: "Annual Easter Retreat",
+      date: "March 17 - 20, 2025",
+    },
+    {
+      imageUrl:
+        "https://scontent.fabv3-1.fna.fbcdn.net/v/t39.30808-6/491267218_683669351017915_4637396055855953487_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=f727a1&_nc_eui2=AeEnVTXNu8bXyjKQbXkIS2fL8flaQmpNegrx-VpCak16CrY48j1yI7BmiRjy46EcnbN0PFsugt5M3osp6l8oF9Mn&_nc_ohc=Fq2vjRgbXzsQ7kNvwG8xkSx&_nc_oc=Adn_gDoWDyXZXOQyCj6awnBacJ8hrj1c4WFHR7mHm9UhfR4aLTmsh9oXRdUsg2nn_jc&_nc_zt=23&_nc_ht=scontent.fabv3-1.fna&_nc_gid=m5n1qZUhCqSGZxbnNAcxbw&oh=00_AfE3mRtYVMaUdB1m7AHiLK68M-H9ccuVhu5rcHs8yoMsbg&oe=68089D46",
+      title: "Annual Easter Retreat",
+      date: "March 17 - 20, 2025",
+    },
+    {
+      imageUrl:
+        "https://scontent.fabv3-2.fna.fbcdn.net/v/t39.30808-6/491890438_683668767684640_1295218291270158039_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=f727a1&_nc_eui2=AeF7J5jRwvC2_hF4ILIGrs4MsoxKyiLaNfSyjErKIto19JscPolxqFOVXSJbv--TfosTDXoIuSQz9YLybxmHIDyd&_nc_ohc=a-ul75ysMHQQ7kNvwGEk4k3&_nc_oc=Adls7v7DH0oCQ2sLQjCfLZwAyRT01snNUGCO7l9qdL0HHGJNspCMJc4dEGPiBymPvtU&_nc_zt=23&_nc_ht=scontent.fabv3-2.fna&_nc_gid=8S1_pIVMycg2ZQ84bI-JJg&oh=00_AfEo6tYBL8KZxXl_rPewCL8NLGOcf0cQbabYBhBE6Fr0vw&oe=680870FE",
+      title: "Annual Easter Retreat",
+      date: "March 17 - 20, 2025",
+    },
+    {
+      imageUrl:
+        "https://scontent.fabv3-1.fna.fbcdn.net/v/t39.30808-6/491228685_683668857684631_3550524566943456201_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=f727a1&_nc_eui2=AeFY_3Ql0RkOtJATXstqQjDVzJhMuKSrO47MmEy4pKs7jqIXnN7iaya_c__CSYOdaVU-TVPU52n4F0R8tfByw5ZV&_nc_ohc=w0s2w1HYyMkQ7kNvwEMDfWG&_nc_oc=Admk24_SPS8pSq4S28_T-A-JuGLcjpfobb0G0VwLFnm_4Xq7F5wAqQ32YMoA_NiANU8&_nc_zt=23&_nc_ht=scontent.fabv3-1.fna&_nc_gid=J8zu62NagI3pu0chd2oHgg&oh=00_AfGHePtmQYEFCSsIg6fL_wE6UHgJqQ0fezsgCpZKBCR_Mw&oe=68088E4B",
+      title: "Annual Easter Retreat",
+      date: "March 17 - 20, 2025",
+    },
+    {
+      imageUrl:
+        "https://scontent.fabv3-2.fna.fbcdn.net/v/t39.30808-6/492008240_683667931018057_7012366717631987304_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=f727a1&_nc_eui2=AeGrlGZT3bBGq6R7KEHD2d7qhX2V-RkrfXaFfZX5GSt9dia7blOgGcchr45E9YSwTNSdwDnU5MNIM-DHHREtUTyF&_nc_ohc=IuE35S5ldeoQ7kNvwEVG2Jv&_nc_oc=AdkEy-x8u3w-_QgR5vhcBH2eHRNZfjnwTEK37OgHcqJURolgmWBF3TXCUSi1iW05HbM&_nc_zt=23&_nc_ht=scontent.fabv3-2.fna&_nc_gid=D7gFR6gTBGJTaWsBbBMrhA&oh=00_AfGPg073_ktTTflS1MYRkD3HoqdEkdZvMtiuvTaxByKwnQ&oe=68089FF5",
+      title: "Annual Easter Retreat",
+      date: "March 17 - 20, 2025",
+    },
+    {
+      imageUrl:
+        "https://scontent.fabv3-2.fna.fbcdn.net/v/t39.30808-6/489927224_683667974351386_4641432326804644019_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=f727a1&_nc_eui2=AeG6QBU7_O5epfTULgSNa1GqYH5-EEEERahgfn4QQQRFqG8qJNB9qdCitg00RisFZsZezb5cK_C021lvf7MFvueu&_nc_ohc=dWPXO7VWeiIQ7kNvwGLOPHJ&_nc_oc=AdkXCyC_IX_PKrHmiYL8j1Dx1JocRkF5BT4YuQwSpUdqfr-jbsQt3jc6pcClf-u6zc4&_nc_zt=23&_nc_ht=scontent.fabv3-2.fna&_nc_gid=GcwR7ysmOhEM936ruCoifg&oh=00_AfHHqi7Jo33cQB7jswwP4kuPYG9YLJHq2cQODNhKeW0vcw&oe=68087A04",
+      title: "Annual Easter Retreat",
+      date: "March 17 - 20, 2025",
+    },
     {
       imageUrl:
         "https://scontent-los2-1.xx.fbcdn.net/v/t39.30808-6/486138250_664417159609801_3061242768304579367_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=833d8c&_nc_eui2=AeG35LBr3WJFyXWnxLtYtOO1XF7iGEkef15cXuIYSR5_Xv3dWpR5-uvREoQ0pEN5SvCqLpBpGrdl0gosWtC0VKr_&_nc_ohc=01GqnrIAgfUQ7kNvwHzjx-K&_nc_oc=AdnHGt0DzAH-Dagk2YND2fFFVJ5uPHuAzPXHszTFk_42sUlUHH3nGlOsOFmu_4ihOzI&_nc_zt=23&_nc_ht=scontent-los2-1.xx&_nc_gid=GFyCWL2KriLiIMAfWcAncw&oh=00_AfGsFXIQDxVC4ouP0HLvHYM6dKmovDrywT0kg3oLUfiSnQ&oe=6804508C",
@@ -754,23 +1100,85 @@ export default function GalleryPage() {
     },
   ];
 
+  const [selectedImage, setSelectedImage] = useState<{
+    url: string;
+    title: string;
+  } | null>(null);
+  const [imageIndex, setImageIndex] = useState<number | null>(null);
+
+  const openModal = (imageUrl: string, title: string, index: number) => {
+    setSelectedImage({ url: imageUrl, title });
+    setImageIndex(index);
+  };
+
+  const closeModal = () => {
+    setSelectedImage(null);
+    setImageIndex(null);
+  };
+
+  const handleNext = () => {
+    if (imageIndex !== null && imageIndex < galleryItems.length - 1) {
+      setImageIndex(imageIndex + 1);
+      setSelectedImage({
+        url: galleryItems[imageIndex + 1].imageUrl,
+        title: galleryItems[imageIndex + 1].title,
+      });
+    }
+  };
+
+  const handlePrevious = () => {
+    if (imageIndex !== null && imageIndex > 0) {
+      setImageIndex(imageIndex - 1);
+      setSelectedImage({
+        url: galleryItems[imageIndex - 1].imageUrl,
+        title: galleryItems[imageIndex - 1].title,
+      });
+    }
+  };
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (!selectedImage) return;
+
+      if (e.key === "ArrowRight") {
+        handleNext();
+      } else if (e.key === "ArrowLeft") {
+        handlePrevious();
+      } else if (e.key === "Escape") {
+        closeModal();
+      }
+    };
+
+    // Add event listener when dialog is open
+    if (selectedImage) {
+      window.addEventListener("keydown", handleKeyDown);
+    }
+
+    // Clean up event listener
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [selectedImage, imageIndex]); // Re-run effect when selected image or index changes
+
   return (
     <>
       <PageHeader
-        title="Photo Gallery"
-        description="Browse photos from our events and activities"
+        title="Gallery"
+        description="Explore moments from our events."
       />
 
-      <section className="w-full py-12 md:py-16 lg:py-20 bg-white">
-        <div className="container px-4 md:px-6">
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
-            <h2 className="text-2xl font-bold tracking-tighter text-secondary">
-              Event Photos
-            </h2>
-            <div className="flex items-center gap-2">
-              <Filter className="h-4 w-4 text-primary" />
-              <span className="text-sm font-medium">Filter by:</span>
-              <select className="text-sm border rounded px-2 py-1">
+      <section className="py-12">
+        <div className="container mx-auto px-4">
+          <div className="flex justify-center mb-8">
+            <div className="relative">
+              <Button
+                variant="outline"
+                className="border-primary text-primary hover:bg-primary/10"
+              >
+                <Filter className="mr-2 h-4 w-4" />
+                Filter by Event
+              </Button>
+              <select className="absolute inset-0 opacity-0 cursor-pointer">
                 <option value="all">All Events</option>
                 <option value="conference">Conference</option>
                 <option value="outreach">Outreach</option>
@@ -782,7 +1190,13 @@ export default function GalleryPage() {
 
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {galleryItems.map((item, index) => (
-              <GalleryItem key={index} {...item} />
+              <React.Fragment key={index}>
+                <div
+                  onClick={() => openModal(item.imageUrl, item.title, index)}
+                >
+                  <GalleryItem {...item} />
+                </div>
+              </React.Fragment>
             ))}
           </div>
 
@@ -813,6 +1227,83 @@ export default function GalleryPage() {
           </div>
         </div>
       </section>
+
+      <Dialog open={!!selectedImage} onOpenChange={closeModal}>
+        <DialogContent className="max-w-3xl bg-black border-none shadow-2xl">
+          {selectedImage && (
+            <>
+              <DialogTitle className="sr-only">
+                {selectedImage.title || "Gallery Image"}
+              </DialogTitle>
+              <div className="relative">
+                <Image
+                  src={selectedImage.url}
+                  alt={selectedImage.title}
+                  width={800}
+                  height={600}
+                  className="w-full max-h-[80vh] object-contain"
+                />
+                <div
+                  className="absolute top-1/2 left-4 -translate-y-1/2 cursor-pointer text-white z-10"
+                  onClick={handlePrevious}
+                >
+                  <ChevronLeft size={40} />
+                </div>
+                <div
+                  className="absolute top-1/2 right-4 -translate-y-1/2 cursor-pointer text-white z-10"
+                  onClick={handleNext}
+                >
+                  <ChevronRight size={40} />
+                </div>
+
+                <div className="absolute bottom-4 left-4 text-white text-lg font-semibold bg-black/50 px-4 py-2 rounded-md">
+                  {selectedImage.title}
+                </div>
+              </div>
+            </>
+          )}
+        </DialogContent>
+      </Dialog>
+      <Dialog open={!!selectedImage} onOpenChange={closeModal}>
+        <DialogContent className="max-w-3xl bg-black border-none shadow-2xl">
+          {selectedImage && (
+            <>
+              <DialogTitle className="sr-only">
+                {selectedImage.title || "Gallery Image"}
+              </DialogTitle>
+              <DialogDescription className="sr-only">
+                Photo from {selectedImage.title || "Gallery Image"}. Use arrow
+                keys or the on-screen arrows to navigate through gallery images.
+              </DialogDescription>
+              <div className="relative">
+                <Image
+                  src={selectedImage.url}
+                  alt={selectedImage.title}
+                  width={800}
+                  height={600}
+                  className="w-full max-h-[80vh] object-contain"
+                />
+                <div
+                  className="absolute top-1/2 left-4 -translate-y-1/2 cursor-pointer text-white z-10"
+                  onClick={handlePrevious}
+                >
+                  <ChevronLeft size={40} />
+                </div>
+                <div
+                  className="absolute top-1/2 right-4 -translate-y-1/2 cursor-pointer text-white z-10"
+                  onClick={handleNext}
+                >
+                  <ChevronRight size={40} />
+                </div>
+
+                <div className="absolute bottom-4 left-4 text-white text-lg font-semibold bg-black/50 px-4 py-2 rounded-md">
+                  {selectedImage.title}
+                </div>
+              </div>
+            </>
+          )}
+        </DialogContent>
+      </Dialog>
     </>
   );
 }
