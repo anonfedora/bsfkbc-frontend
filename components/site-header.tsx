@@ -88,12 +88,16 @@ export function SiteHeader() {
         </div>
         <div className="flex flex-1 items-center justify-end space-x-4">
           <nav className="flex items-center space-x-1">
-            <Button variant="outline" size="sm" className="hidden md:flex">
-              Sign In
-            </Button>
-            <Button size="sm" className="hidden md:flex">
-              Register
-            </Button>
+            <Link href="/auth/signin">
+              <Button variant="outline" size="sm" className="hidden md:flex">
+                Sign In
+              </Button>
+            </Link>
+            <Link href="/auth/register">
+              <Button size="sm" className="hidden md:flex">
+                Register
+              </Button>
+            </Link>
             <Button
               variant="ghost"
               size="sm"
@@ -185,10 +189,14 @@ export function SiteHeader() {
                 Contact
               </Link>
               <div className="pt-4 space-y-2">
-                <Button variant="outline" className="w-full justify-center">
-                  Sign In
-                </Button>
-                <Button className="w-full justify-center">Register</Button>
+                <Link href="/auth/signin">
+                  <Button variant="outline" className="w-full justify-center">
+                    Sign In
+                  </Button>
+                </Link>
+                <Link href="/auth/register">
+                  <Button className="w-full justify-center">Register</Button>
+                </Link>
               </div>
             </nav>
           </div>
