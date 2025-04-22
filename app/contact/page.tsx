@@ -32,47 +32,49 @@ export default function ContactPage() {
           <div className="grid gap-10 lg:grid-cols-2">
             <div>
               <h2 className="text-2xl font-bold tracking-tighter text-secondary mb-6">
-                Send Us a Message
+                Send us a Message
               </h2>
-              <Card className="bg-white">
-                <CardContent className="pt-6">
-                  <form className="space-y-4">
-                    <div className="grid grid-cols-2 gap-4">
-                      <div className="space-y-2">
-                        <Label htmlFor="firstName">First Name</Label>
-                        <Input id="firstName" placeholder="John" />
-                      </div>
-                      <div className="space-y-2">
-                        <Label htmlFor="lastName">Last Name</Label>
-                        <Input id="lastName" placeholder="Doe" />
-                      </div>
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="email">Email</Label>
-                      <Input
-                        id="email"
-                        type="email"
-                        placeholder="john.doe@example.com"
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="subject">Subject</Label>
-                      <Input id="subject" placeholder="How can we help you?" />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="message">Message</Label>
-                      <Textarea
-                        id="message"
-                        placeholder="Type your message here..."
-                        className="min-h-[120px]"
-                      />
-                    </div>
-                    <Button className="w-full bg-primary hover:bg-primary/90">
-                      Send Message
-                    </Button>
-                  </form>
-                </CardContent>
-              </Card>
+              <form className="space-y-4">
+                <div className="grid gap-4 sm:grid-cols-2">
+                  <div className="space-y-2">
+                    <Label htmlFor="name">Name</Label>
+                    <Input
+                      id="name"
+                      placeholder="Enter your name"
+                      required
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="email">Email</Label>
+                    <Input
+                      id="email"
+                      type="email"
+                      placeholder="Enter your email"
+                      required
+                    />
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="subject">Subject</Label>
+                  <Input
+                    id="subject"
+                    placeholder="Enter the subject"
+                    required
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="message">Message</Label>
+                  <Textarea
+                    id="message"
+                    placeholder="Enter your message"
+                    required
+                    className="min-h-[150px]"
+                  />
+                </div>
+                <Button type="submit" className="w-full">
+                  Send Message
+                </Button>
+              </form>
             </div>
 
             <div>
@@ -131,10 +133,10 @@ export default function ContactPage() {
                     </p>
                     <p className="text-muted-foreground">
                       <a
-                        href="tel:+2348098765432"
+                        href="tel:+2348023456789"
                         className="hover:text-primary transition-colors"
                       >
-                        +234 809 876 5432
+                        +234 802 345 6789
                       </a>
                     </p>
                   </CardContent>

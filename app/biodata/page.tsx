@@ -1,369 +1,243 @@
 "use client";
 
-import type React from "react";
-
-import { useState } from "react";
 import { PageHeader } from "@/components/page-header";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { LockKeyhole, UserCircle, Shield, Loader2 } from "lucide-react";
-import { useAuth } from "@/context/auth-context";
-import { useRouter } from "next/navigation";
-import { useToast } from "@/hooks/use-toast";
+import { Textarea } from "@/components/ui/textarea";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import * as z from "zod";
+
+const formSchema = z.object({
+  fullName: z.string().min(2, {
+    message: "Full name must be at least 2 characters.",
+  }),
+  email: z.string().email({
+    message: "Please enter a valid email address.",
+  }),
+  phone: z.string().min(10, {
+    message: "Phone number must be at least 10 characters.",
+  }),
+  institution: z.string().min(2, {
+    message: "Institution name must be at least 2 characters.",
+  }),
+  department: z.string().min(2, {
+    message: "Department name must be at least 2 characters.",
+  }),
+  level: z.string().min(1, {
+    message: "Please select your level.",
+  }),
+  address: z.string().min(10, {
+    message: "Address must be at least 10 characters.",
+  }),
+  testimony: z.string().min(20, {
+    message: "Testimony must be at least 20 characters.",
+  }),
+});
 
 export default function BiodataPage() {
-  const { login, register, isAuthenticated, user } = useAuth();
-  const router = useRouter();
-  const { toast } = useToast();
-
-  // Form states
-  const [loginData, setLoginData] = useState({ email: "", password: "" });
-  const [registerData, setRegisterData] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      fullName: "",
+      email: "",
+      phone: "",
+      institution: "",
+      department: "",
+      level: "",
+      address: "",
+      testimony: "",
+    },
   });
 
-  // Loading states
-  const [isLoginLoading, setIsLoginLoading] = useState(false);
-  const [isRegisterLoading, setIsRegisterLoading] = useState(false);
-
-  // Error states
-  const [loginError, setLoginError] = useState("");
-  const [registerError, setRegisterError] = useState("");
-
-  // Handle login form change
-  const handleLoginChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setLoginData((prev) => ({ ...prev, [name]: value }));
-    setLoginError("");
-  };
-
-  // Handle register form change
-  const handleRegisterChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setRegisterData((prev) => ({ ...prev, [name]: value }));
-    setRegisterError("");
-  };
-
-  // Handle login submission
-  const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsLoginLoading(true);
-    setLoginError("");
-
-    try {
-      const { success, message } = await login(
-        loginData.email,
-        loginData.password
-      );
-
-      if (success) {
-        toast({
-          title: "Login successful",
-          description: "Welcome back to BSF Kaduna Baptist Conference",
-        });
-        router.push("/biodata/profile");
-      } else {
-        setLoginError(
-          message || "Login failed. Please check your credentials."
-        );
-      }
-    } catch (error) {
-      setLoginError("An unexpected error occurred. Please try again.");
-      console.error(error);
-    } finally {
-      setIsLoginLoading(false);
-    }
-  };
-
-  // Handle register submission
-  const handleRegister = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsRegisterLoading(true);
-    setRegisterError("");
-
-    // Validate password match
-    if (registerData.password !== registerData.confirmPassword) {
-      setRegisterError("Passwords do not match");
-      setIsRegisterLoading(false);
-      return;
-    }
-
-    try {
-      const { success, message } = await register({
-        firstName: registerData.firstName,
-        lastName: registerData.lastName,
-        email: registerData.email,
-        password: registerData.password,
-      });
-
-      if (success) {
-        toast({
-          title: "Registration successful",
-          description: "Your account has been created successfully",
-        });
-        router.push("/biodata/profile");
-      } else {
-        setRegisterError(message || "Registration failed. Please try again.");
-      }
-    } catch (error) {
-      setRegisterError("An unexpected error occurred. Please try again.");
-      console.error(error);
-    } finally {
-      setIsRegisterLoading(false);
-    }
-  }; 
-  
-  // TODO - Temporarily route registered usere to home instead of /biodata/profile
-  // If user is already authenticated, redirect to profile
-  if (isAuthenticated && user) {
-    router.push("/");
-    return null;
+  function onSubmit(values: z.infer<typeof formSchema>) {
+    // Handle form submission
+    console.log(values);
   }
 
   return (
     <>
       <PageHeader
         title="Student Biodata"
-        description="Manage your personal information and profile"
+        description="Submit your details to join BSF Kaduna Baptist Conference"
       />
 
       <section className="w-full py-12 md:py-16 lg:py-20 bg-white">
         <div className="container px-4 md:px-6">
           <div className="max-w-3xl mx-auto">
-            <Tabs defaultValue="login" className="w-full">
-              <TabsList className="grid w-full grid-cols-2">
-                <TabsTrigger value="login">Sign In</TabsTrigger>
-                <TabsTrigger value="register">Register</TabsTrigger>
-              </TabsList>
-              <TabsContent value="login">
-                <Card>
-                  <form onSubmit={handleLogin}>
-                    <CardHeader>
-                      <CardTitle className="text-secondary">Sign In</CardTitle>
-                      <CardDescription>
-                        Access your student profile and biodata
-                      </CardDescription>
-                    </CardHeader>
-                    <CardContent className="space-y-4">
-                      {loginError && (
-                        <div className="p-3 bg-red-50 border border-red-200 text-red-600 text-sm rounded">
-                          {loginError}
-                        </div>
-                      )}
-                      <div className="space-y-2">
-                        <Label htmlFor="email">Email</Label>
-                        <Input
-                          id="email"
-                          name="email"
-                          type="email"
-                          placeholder="m.example@example.com"
-                          value={loginData.email}
-                          onChange={handleLoginChange}
-                          required
-                        />
-                      </div>
-                      <div className="space-y-2">
-                        <div className="flex items-center justify-between">
-                          <Label htmlFor="password">Password</Label>
-                          <Button
-                            variant="link"
-                            className="text-xs text-primary p-0 h-auto"
-                          >
-                            Forgot password?
-                          </Button>
-                        </div>
-                        <Input
-                          id="password"
-                          name="password"
-                          type="password"
-                          value={loginData.password}
-                          onChange={handleLoginChange}
-                          required
-                        />
-                      </div>
-                    </CardContent>
-                    <CardFooter>
-                      <Button
-                        type="submit"
-                        className="w-full bg-primary hover:bg-primary/90"
-                        disabled={isLoginLoading}
-                      >
-                        {isLoginLoading ? (
-                          <>
-                            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                            Signing In...
-                          </>
-                        ) : (
-                          "Sign In"
+            <Card>
+              <CardHeader>
+                <CardTitle>Personal Information</CardTitle>
+                <CardDescription>
+                  Please fill in your details accurately
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <Form {...form}>
+                  <form
+                    onSubmit={form.handleSubmit(onSubmit)}
+                    className="space-y-6"
+                  >
+                    <div className="grid gap-4 md:grid-cols-2">
+                      <FormField
+                        control={form.control}
+                        name="fullName"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Full Name</FormLabel>
+                            <FormControl>
+                              <Input placeholder="John Doe" {...field} />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
                         )}
-                      </Button>
-                    </CardFooter>
-                  </form>
-                </Card>
-              </TabsContent>
-              <TabsContent value="register">
-                <Card>
-                  <form onSubmit={handleRegister}>
-                    <CardHeader>
-                      <CardTitle className="text-secondary">Register</CardTitle>
-                      <CardDescription>
-                        Create a new account to manage your student profile
-                      </CardDescription>
-                    </CardHeader>
-                    <CardContent className="space-y-4">
-                      {registerError && (
-                        <div className="p-3 bg-red-50 border border-red-200 text-red-600 text-sm rounded">
-                          {registerError}
-                        </div>
-                      )}
-                      <div className="grid grid-cols-2 gap-4">
-                        <div className="space-y-2">
-                          <Label htmlFor="firstName">First Name</Label>
-                          <Input
-                            id="firstName"
-                            name="firstName"
-                            placeholder="John"
-                            value={registerData.firstName}
-                            onChange={handleRegisterChange}
-                            required
-                          />
-                        </div>
-                        <div className="space-y-2">
-                          <Label htmlFor="lastName">Last Name</Label>
-                          <Input
-                            id="lastName"
-                            name="lastName"
-                            placeholder="Doe"
-                            value={registerData.lastName}
-                            onChange={handleRegisterChange}
-                            required
-                          />
-                        </div>
-                      </div>
-                      <div className="space-y-2">
-                        <Label htmlFor="registerEmail">Email</Label>
-                        <Input
-                          id="registerEmail"
-                          name="email"
-                          type="email"
-                          placeholder="m.example@example.com"
-                          value={registerData.email}
-                          onChange={handleRegisterChange}
-                          required
-                        />
-                      </div>
-                      <div className="space-y-2">
-                        <Label htmlFor="registerPassword">Password</Label>
-                        <Input
-                          id="registerPassword"
-                          name="password"
-                          type="password"
-                          value={registerData.password}
-                          onChange={handleRegisterChange}
-                          required
-                        />
-                      </div>
-                      <div className="space-y-2">
-                        <Label htmlFor="confirmPassword">
-                          Confirm Password
-                        </Label>
-                        <Input
-                          id="confirmPassword"
-                          name="confirmPassword"
-                          type="password"
-                          value={registerData.confirmPassword}
-                          onChange={handleRegisterChange}
-                          required
-                        />
-                      </div>
-                    </CardContent>
-                    <CardFooter>
-                      <Button
-                        type="submit"
-                        className="w-full bg-primary hover:bg-primary/90"
-                        disabled={isRegisterLoading}
-                      >
-                        {isRegisterLoading ? (
-                          <>
-                            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                            Registering...
-                          </>
-                        ) : (
-                          "Register"
+                      />
+
+                      <FormField
+                        control={form.control}
+                        name="email"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Email</FormLabel>
+                            <FormControl>
+                              <Input
+                                type="email"
+                                placeholder="john@example.com"
+                                {...field}
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
                         )}
-                      </Button>
-                    </CardFooter>
+                      />
+
+                      <FormField
+                        control={form.control}
+                        name="phone"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Phone Number</FormLabel>
+                            <FormControl>
+                              <Input
+                                type="tel"
+                                placeholder="+234 123 456 7890"
+                                {...field}
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+
+                      <FormField
+                        control={form.control}
+                        name="institution"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Institution</FormLabel>
+                            <FormControl>
+                              <Input
+                                placeholder="Kaduna State University"
+                                {...field}
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+
+                      <FormField
+                        control={form.control}
+                        name="department"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Department</FormLabel>
+                            <FormControl>
+                              <Input
+                                placeholder="Computer Science"
+                                {...field}
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+
+                      <FormField
+                        control={form.control}
+                        name="level"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Level</FormLabel>
+                            <FormControl>
+                              <Input placeholder="100" {...field} />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+
+                    <FormField
+                      control={form.control}
+                      name="address"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Address</FormLabel>
+                          <FormControl>
+                            <Textarea
+                              placeholder="Enter your full address"
+                              {...field}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    <FormField
+                      control={form.control}
+                      name="testimony"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Testimony</FormLabel>
+                          <FormControl>
+                            <Textarea
+                              placeholder="Share your testimony of faith"
+                              {...field}
+                            />
+                          </FormControl>
+                          <FormDescription>
+                            Tell us about your journey of faith and how you came to know Christ
+                          </FormDescription>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    <Button type="submit" className="w-full">
+                      Submit Biodata
+                    </Button>
                   </form>
-                </Card>
-              </TabsContent>
-            </Tabs>
-
-            <div className="mt-12 space-y-6">
-              <h2 className="text-2xl font-bold tracking-tighter text-secondary text-center">
-                About Student Biodata
-              </h2>
-
-              <div className="grid gap-6 md:grid-cols-3">
-                <Card className="bg-white">
-                  <CardHeader className="flex flex-row items-center gap-4 pb-2">
-                    <UserCircle className="h-8 w-8 text-primary" />
-                    <CardTitle className="text-lg text-secondary">
-                      Personal Profile
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-sm text-muted-foreground">
-                      Manage your personal information, contact details, and
-                      academic information in one place.
-                    </p>
-                  </CardContent>
-                </Card>
-
-                <Card className="bg-white">
-                  <CardHeader className="flex flex-row items-center gap-4 pb-2">
-                    <LockKeyhole className="h-8 w-8 text-primary" />
-                    <CardTitle className="text-lg text-secondary">
-                      Secure Storage
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-sm text-muted-foreground">
-                      Your information is stored securely and is only accessible
-                      to authorized personnel.
-                    </p>
-                  </CardContent>
-                </Card>
-
-                <Card className="bg-white">
-                  <CardHeader className="flex flex-row items-center gap-4 pb-2">
-                    <Shield className="h-8 w-8 text-primary" />
-                    <CardTitle className="text-lg text-secondary">
-                      Privacy Control
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-sm text-muted-foreground">
-                      Control what information is shared with other members of
-                      the fellowship.
-                    </p>
-                  </CardContent>
-                </Card>
-              </div>
-            </div>
+                </Form>
+              </CardContent>
+            </Card>
           </div>
         </div>
       </section>

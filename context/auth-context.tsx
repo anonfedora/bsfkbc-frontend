@@ -70,17 +70,34 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   // Login function
   const login = async (email: string, password: string) => {
     try {
+      console.log("Attempting to login with API URL:", API_BASE_URL);
+      
       const response = await fetch(`${API_BASE_URL}/auth/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          "Accept": "application/json",
         },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ email, password })
       });
 
-      const data = await response.json();
+      // Log response status and headers for debugging
+      console.log("Login response status:", response.status);
+      console.log("Login response headers:", Object.fromEntries(response.headers.entries()));
+
+      let data;
+      try {
+        data = await response.json();
+      } catch (parseError) {
+        console.error("Error parsing response:", parseError);
+        return { 
+          success: false, 
+          message: "Unable to parse server response. Please try again later." 
+        };
+      }
 
       if (!response.ok) {
+        console.error("Login failed with status:", response.status, "message:", data.message);
         return { success: false, message: data.message || "Login failed" };
       }
 
@@ -94,8 +111,25 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
       return { success: true };
     } catch (error) {
-      console.error("Login error:", error);
-      return { success: false, message: "An error occurred during login" };
+      // Log the specific error type and message
+      console.error("Login error details:", {
+        name: error.name,
+        message: error.message,
+        stack: error.stack,
+      });
+
+      // Handle specific network errors
+      if (error instanceof TypeError && error.message === "Failed to fetch") {
+        return { 
+          success: false, 
+          message: "Unable to connect to the server. Please check your internet connection and try again." 
+        };
+      }
+
+      return { 
+        success: false, 
+        message: "An unexpected error occurred. Please try again later." 
+      };
     }
   };
 
